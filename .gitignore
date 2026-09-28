@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+env/
+.venv/
+__pycache__/
+*.pyc
+
+# Secrets and credentials
+.env
+.streamlit/secrets.toml
+
+# Local database and cache
+analytics.db
+*.db
+.pytest_cache/
+.coverage
+
+# IDE and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
