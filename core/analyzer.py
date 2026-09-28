@@ -240,11 +240,7 @@ def generate_fallback_analysis(resume_text: str, jd_text: str, extracted_bullets
 
     return {
         "match_score": match_score,
-        "score_breakdown": {
-            "keyword_match": int(coverage * 100),
-            "structural_quality": min(100, int((section_diag["metric_count"] * 15) + (sum(section_diag["sections"].values()) * 12))),
-            "technical_depth": min(100, int(tfidf_sim * 120 + 20))
-        },
+        "score_breakdown": breakdown,
         "matched_keywords": matched,
         "missing_keywords": missing,
         "weak_sections": weak_sections,
