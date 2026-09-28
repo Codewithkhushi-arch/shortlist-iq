@@ -218,17 +218,12 @@ with st.sidebar:
     
     st.divider()
     
-    # API Key Configuration
-    st.markdown("#### 🔑 **API Key Settings**")
-    if api_key:
-        st.success("✅ Gemini API Key Active")
-    else:
-        user_key = st.text_input("Enter Google Gemini API Key:", type="password", help="Needed for deep AI analysis and smart rewrites. If not provided, the fast hybrid engine will run.")
-        if user_key:
-            api_key = user_key
-            st.success("Key set for this session!")
-            
-    st.caption("🔒 Privacy Guarantee: Your resume is processed in memory and never stored in the database.")
+    # Privacy Badge
+    st.markdown("""
+    <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.25); border-radius: 8px; padding: 10px; font-size: 0.8rem; color: #94A3B8;">
+        🔒 <b>100% Privacy Guarantee:</b> Resumes are processed in memory and never stored in the database.
+    </div>
+    """, unsafe_allow_html=True)
     
     st.divider()
     st.markdown("#### 📌 Quick Shortcuts")
