@@ -6,11 +6,17 @@ Empowering final-year engineering students & early-career devs to beat ATS filte
 import os
 import uuid
 import time
+import textwrap
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 from dotenv import load_dotenv
+
+def render_html(html_str: str):
+    """Renders HTML via st.markdown after dedenting to prevent markdown code block formatting."""
+    st.markdown(textwrap.dedent(html_str).strip(), unsafe_allow_html=True)
+
 
 # Load local environment variables if available
 load_dotenv()
@@ -412,26 +418,26 @@ if nav_mode == "🚀 Resume Analyzer":
             
             # Score Status Description
             if score >= 75:
-                st.markdown("""
+                render_html("""
                 <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid #10B981; padding: 12px; border-radius: 8px; text-align: center;">
                     <b style="color: #34D399;">🌟 Strong Shortlist Candidate</b><br>
                     <span style="font-size: 0.85rem; color: #CBD5E1;">High keyword alignment and quantifiable metrics. Low probability of automated ATS rejection.</span>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
             elif score >= 50:
-                st.markdown("""
+                render_html("""
                 <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid #F59E0B; padding: 12px; border-radius: 8px; text-align: center;">
                     <b style="color: #FBBF24;">⚠️ Moderate Match (At Risk)</b><br>
                     <span style="font-size: 0.85rem; color: #CBD5E1;">Missing critical stack keywords or metrics. Implementing top fixes will push you into the top 15% tier.</span>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
             else:
-                st.markdown("""
+                render_html("""
                 <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid #EF4444; padding: 12px; border-radius: 8px; text-align: center;">
                     <b style="color: #F87171;">🛑 High Rejection Risk</b><br>
                     <span style="font-size: 0.85rem; color: #CBD5E1;">Significant mismatch in tech stack and project depth. Apply the recommended rewrites and missing keywords.</span>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
         with r1_col2:
             st.markdown("### 📊 **Score Breakdown & Dimensions**")
@@ -442,29 +448,29 @@ if nav_mode == "🚀 Resume Analyzer":
             
             b_c1, b_c2, b_c3 = st.columns(3)
             with b_c1:
-                st.markdown(f"""
+                render_html(f"""
                 <div class="metric-card">
                     <div style="color: #94A3B8; font-size: 0.85rem;">Keyword Overlap</div>
                     <div style="font-size: 1.6rem; font-weight: 700; color: #38BDF8;">{kw_match}%</div>
                     <div style="font-size: 0.75rem; color: #64748B;">Core stack match</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
             with b_c2:
-                st.markdown(f"""
+                render_html(f"""
                 <div class="metric-card">
                     <div style="color: #94A3B8; font-size: 0.85rem;">Project & Metric Impact</div>
                     <div style="font-size: 1.6rem; font-weight: 700; color: #818CF8;">{struct_qual}%</div>
                     <div style="font-size: 0.75rem; color: #64748B;">Quantifiable XYZ metrics</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
             with b_c3:
-                st.markdown(f"""
+                render_html(f"""
                 <div class="metric-card">
                     <div style="color: #94A3B8; font-size: 0.85rem;">Technical Depth</div>
                     <div style="font-size: 1.6rem; font-weight: 700; color: #34D399;">{tech_depth}%</div>
                     <div style="font-size: 0.75rem; color: #64748B;">Architecture & Tools</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
             st.markdown("<br>", unsafe_allow_html=True)
             st.markdown("#### 🏆 **Top 3 Prioritized Action Items**")
@@ -473,12 +479,12 @@ if nav_mode == "🚀 Resume Analyzer":
                 p = fix.get("priority", 1)
                 t = fix.get("title", "")
                 a = fix.get("action", "")
-                st.markdown(f"""
+                render_html(f"""
                 <div class="fix-card priority-{p}">
                     <b style="color: #F8FAFC;">#{p} {t}</b>
                     <div style="font-size: 0.88rem; color: #CBD5E1; margin-top: 4px;">{a}</div>
                 </div>
-                """, unsafe_allow_html=True)
+                """)
 
         st.divider()
 
@@ -526,7 +532,7 @@ if nav_mode == "🚀 Resume Analyzer":
                 sec_reason = w.get("reason", "")
                 
                 with st.container():
-                    st.markdown(f"""
+                    render_html(f"""
                     <div style="background: #1E293B; border: 1px solid #334155; border-radius: 10px; padding: 14px; margin-bottom: 12px;">
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <span style="font-weight: 700; color: #F8FAFC; font-size: 0.95rem;">📁 {sec_name}</span>
@@ -536,22 +542,22 @@ if nav_mode == "🚀 Resume Analyzer":
                             {sec_reason}
                         </div>
                     </div>
-                    """, unsafe_allow_html=True)
+                    """)
 
         st.divider()
 
         # --- Call to Action to Rewrite Studio ---
-        st.markdown("""
+        render_html("""
         <div style="background: linear-gradient(90deg, #1E1B4B 0%, #0F172A 100%); border: 1px solid #6366F1; border-radius: 12px; padding: 18px 24px; display: flex; justify-content: space-between; align-items: center;">
             <div>
                 <b style="font-size: 1.1rem; color: #F8FAFC;">✍️ Ready to boost your score with AI Rewrites?</b>
                 <div style="color: #94A3B8; font-size: 0.9rem;">Review high-impact bullet suggestions, accept them with 1 click, and watch your before/after score rise in real time!</div>
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
         # --- Feedback Widget (Requirement 4) ---
-        st.markdown("<br>", unsafe_allow_html=True)
+        render_html("<br>")
         st.markdown("### 💬 **Was this analysis helpful?**")
         
         fb_col1, fb_col2 = st.columns([1, 2])
@@ -578,7 +584,7 @@ if nav_mode == "🚀 Resume Analyzer":
 # PAGE 2: REWRITE STUDIO & LIVE BEFORE/AFTER SCORE
 # ==========================================
 elif nav_mode == "✍️ Rewrite Studio & Live Score":
-    st.markdown("""
+    render_html("""
     <div class="hero-container">
         <div class="hero-title">✍️ Smart Rewrite Studio & Live Score Delta</div>
         <div class="hero-subtitle">
@@ -586,7 +592,7 @@ elif nav_mode == "✍️ Rewrite Studio & Live Score":
             <i>"Accomplished [X], as measured by [Y], by doing [Z]"</i>. Accept rewrites to see your live score increase!
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
     
     if not st.session_state.analysis_result:
         st.info("ℹ️ No active analysis found. Please head to the **🚀 Resume Analyzer** tab to upload your resume first.")
@@ -603,30 +609,30 @@ elif nav_mode == "✍️ Rewrite Studio & Live Score":
     delta_s = curr_s - init_s
     
     with score_col1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Original ATS Score</div>
             <div class="score-badge score-mid" style="margin-top: 8px;">{init_s}%</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
     with score_col2:
         badge_style = "score-high" if delta_s >= 0 else "score-low"
         delta_str = f"+{delta_s}% Boost 🚀" if delta_s > 0 else (f"{delta_s}%" if delta_s < 0 else "No Change Yet")
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Live Score Delta</div>
             <div class="score-badge {badge_style}" style="margin-top: 8px;">{delta_str}</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with score_col3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Current Working Score</div>
             <div class="score-badge score-high" style="margin-top: 8px;">{curr_s}%</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
     st.divider()
     
@@ -648,14 +654,13 @@ elif nav_mode == "✍️ Rewrite Studio & Live Score":
             is_accepted = rw_id in st.session_state.accepted_rewrites
             is_rejected = rw_id in st.session_state.rejected_rewrites
             
-            st.markdown(f"""
+            status_badge = "<span class='badge-pill badge-matched'>✅ Accepted</span>" if is_accepted else ("<span class='badge-pill badge-missing'>❌ Rejected</span>" if is_rejected else "")
+            
+            render_html(f"""
             <div class="rewrite-box">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                     <b style="color: #818CF8; font-size: 0.95rem;">Suggestion #{idx+1}</b>
-                    <span>
-                        {"<span class='badge-pill badge-matched'>✅ Accepted</span>" if is_accepted else ""}
-                        {"<span class='badge-pill badge-missing'>❌ Rejected</span>" if is_rejected else ""}
-                    </span>
+                    <span>{status_badge}</span>
                 </div>
                 <div style="margin-bottom: 8px;">
                     <div style="font-size: 0.78rem; color: #94A3B8; text-transform: uppercase; font-weight: 700;">Before (Original):</div>
@@ -669,7 +674,7 @@ elif nav_mode == "✍️ Rewrite Studio & Live Score":
                     💡 <b>Why this wins:</b> {reason}
                 </div>
             </div>
-            """, unsafe_allow_html=True)
+            """)
             
             c_btn1, c_btn2, c_sp = st.columns([1, 1, 3])
             with c_btn1:
@@ -738,7 +743,7 @@ elif nav_mode == "✍️ Rewrite Studio & Live Score":
 # PAGE 3: PRODUCT ANALYTICS (ADMIN DASHBOARD)
 # ==========================================
 elif nav_mode == "📊 Product Analytics (Admin)":
-    st.markdown("""
+    render_html("""
     <div class="hero-container">
         <div class="hero-title">📊 ShortlistIQ Product Analytics & Telemetry</div>
         <div class="hero-subtitle">
@@ -746,7 +751,7 @@ elif nav_mode == "📊 Product Analytics (Admin)":
             <b>100% Privacy Compliant: Zero resume text stored.</b>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
     
     # Password Protection Gate (Requirement 6)
     auth_container = st.container()
@@ -773,40 +778,40 @@ elif nav_mode == "📊 Product Analytics (Admin)":
     kpi_col1, kpi_col2, kpi_col3, kpi_col4 = st.columns(4)
     
     with kpi_col1:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Unique Users (Sessions)</div>
             <div style="font-size: 2rem; font-weight: 800; color: #38BDF8;">{metrics['total_sessions']}</div>
             <div style="font-size: 0.75rem; color: #64748B;">Active anonymous sessions</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
     with kpi_col2:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Funnel Completion Rate</div>
             <div style="font-size: 2rem; font-weight: 800; color: #10B981;">{metrics['completion_rate']}%</div>
             <div style="font-size: 0.75rem; color: #64748B;">Upload → Result Viewed ({metrics['total_views']}/{metrics['total_uploads']})</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with kpi_col3:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Rewrite Acceptance Rate</div>
             <div style="font-size: 2rem; font-weight: 800; color: #818CF8;">{metrics['rewrite_acceptance_rate']}%</div>
             <div style="font-size: 0.75rem; color: #64748B;">Accepted: {metrics['rewrites_accepted']} | Rejected: {metrics['rewrites_rejected']}</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
 
     with kpi_col4:
-        st.markdown(f"""
+        render_html(f"""
         <div class="metric-card">
             <div style="color: #94A3B8; font-size: 0.85rem;">Return / Engaged User Rate</div>
             <div style="font-size: 2rem; font-weight: 800; color: #F59E0B;">{metrics['return_user_rate']}%</div>
             <div style="font-size: 0.75rem; color: #64748B;">Multi-iteration sessions ({metrics['return_sessions']})</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
     st.divider()
     
@@ -838,12 +843,12 @@ elif nav_mode == "📊 Product Analytics (Admin)":
 
     with ch_col2:
         st.markdown("### 🌟 **User Satisfaction (CSAT) & Feedback**")
-        st.markdown(f"""
+        render_html(f"""
         <div style="background: #1E293B; border-radius: 10px; padding: 16px; margin-bottom: 14px;">
             <div style="font-size: 1.1rem; font-weight: 700;">Satisfaction Rate: <span style="color: #10B981;">{metrics['csat_rate']}% Positive</span></div>
             <div style="color: #94A3B8; font-size: 0.85rem;">Total Feedback Submissions: {metrics['total_feedback']} (👍 {metrics['positive_feedback']} / 👎 {metrics['negative_feedback']})</div>
         </div>
-        """, unsafe_allow_html=True)
+        """)
         
         recent_fb = get_recent_feedback(10)
         if recent_fb:
